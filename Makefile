@@ -1,2 +1,2 @@
 all:
-	g++ main.cpp -o prg
+	g++ main.cpp -o trig

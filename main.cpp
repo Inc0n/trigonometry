@@ -1,5 +1,8 @@
 #include <iostream>
 #include <cmath>
+#include <sstream>
+// #include <iomanip> 
+
 #define PI 3.14159265358979323846
 
 using namespace std;
@@ -12,7 +15,7 @@ int poly(int stop) {
 }
 
 float deg_rad(int degree) {
-	return PI / (180 / 60);
+	return PI / (180.0 / degree);
 }
 
 int sine(int i) {
@@ -24,20 +27,49 @@ int cosine(int i) {
 }
 
 float compute(float angle, int (*trig)(int)) {
-	double value = 0;
-	double rad = deg_rad(angle);
-	
+	float value = 0;
+	float rad = deg_rad(angle);
+	// cout << rad << endl;
+	// cout << endl;
+
 	for(int i = 0; i < 5; i++){ 
 		int num = trig(i);
-		double expansion = pow(-1, i) * pow(rad, num) / poly(num);
+		float expansion = pow(-1, i) * pow(rad, num) / poly(num);
 		value += expansion;
+		// cout << value << endl;
 	}
 
 	return value;
 }
 
-int main(int argc, char *argv[]){
-	int angle = 60;
-	cout << compute(angle, &sine) << endl;
+float tan(int angle) {
+	return compute(angle, &sine) / compute(angle, &cosine);
+}
 
+bool toInt(string str, int &value) {
+	istringstream iss(str);
+	
+	if (!iss.fail())
+    {
+       if (iss >> value)
+           return true;
+
+       iss.clear();
+       iss.ignore();
+    }
+    return false; // There is no integer!
+}
+int main(int argc, char *argv[]){
+
+	int angle;
+	if (argc > 1) {
+		
+		if (!toInt(argv[1], angle))
+			return -1;
+		cout << argv[1] << endl; 
+
+	}
+	cout << compute(angle, &sine) << endl;
+	cout << tan(angle) << endl;
+	return 0;
 }
