@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <sstream>
+#include "trig.h"
 // #include <iomanip> 
 
 #define PI 3.14159265358979323846
@@ -34,7 +35,10 @@ float compute(float angle, int (*trig)(int)) {
 
 	for(int i = 0; i < 5; i++){ 
 		int num = trig(i);
+		// cout << num << endl;
 		float expansion = pow(-1, i) * pow(rad, num) / poly(num);
+		// cout << poly(num) << endl;
+		cout << pow(rad, num) << endl;
 		value += expansion;
 		// cout << value << endl;
 	}
@@ -59,17 +63,19 @@ bool toInt(string str, int &value) {
     }
     return false; // There is no integer!
 }
+
 int main(int argc, char *argv[]){
 
 	int angle;
 	if (argc > 1) {
-		
 		if (!toInt(argv[1], angle))
 			return -1;
-		cout << argv[1] << endl; 
-
 	}
-	cout << compute(angle, &sine) << endl;
-	cout << tan(angle) << endl;
+	// cout << compute(30, &sine) << endl;
+	// cout << tan(angle) << endl;
+
+	Trig test;
+	float result = test.cosine(29);
+	cout << result << endl;
 	return 0;
 }
